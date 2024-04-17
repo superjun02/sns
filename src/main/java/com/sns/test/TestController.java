@@ -41,5 +41,6 @@ public class TestController {
 	@ResponseBody
 	public List<Map<String, Object>> test4() {
 		return postMapper.selectPostList();
+		// 클론 테스트 확인
 	}
 }
