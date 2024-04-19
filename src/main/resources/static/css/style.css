@@ -9,3 +9,35 @@ header {
 .loginForm {
 	background-color: #FAFAFA;
 }
+#imgBtn {
+	border: none;
+	background: white;
+}
+#postInputBox {
+	border: 1px solid;
+	border-color: #CED4DA;
+}
+#postBox {
+	border: none;
+}
+#userNameBox {
+	background-color: #E0E0E0;
+}
+#infoBtn {
+	border: none;
+	background-color: #E0E0E0;
+}
+#likeBtn {
+	border: none;
+	background: white;
+}
+#commentBox{
+	background-color: #E0E0E0;
+}
+#commentList {
+	text-align: left;
+}
+#inputCommentBtn {
+	border: none;
+	background: white;
+}
