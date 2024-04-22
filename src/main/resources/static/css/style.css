@@ -11,33 +11,43 @@ header {
 }
 #imgBtn {
 	border: none;
-	background: white;
+	background: transparent;
 }
 #postInputBox {
+	border: 1px solid;
+	border-color: #CED4DA;
+}
+.timelineBox {
 	border: 1px solid;
 	border-color: #CED4DA;
 }
 #postBox {
 	border: none;
 }
-#userNameBox {
-	background-color: #E0E0E0;
-}
+
 #infoBtn {
-	border: none;
-	background-color: #E0E0E0;
-}
-#likeBtn {
 	border: none;
 	background: white;
 }
+#likeBtn {
+	border: none;
+	background: transparent;
+}
+#commentInputBox {
+	border-top: 1px solid;
+	border-color: #CED4DA;
+}
 #commentBox{
-	background-color: #E0E0E0;
+	border-bottom: 1px solid;
+	border-color: #CED4DA;
 }
 #commentList {
 	text-align: left;
 }
 #inputCommentBtn {
 	border: none;
-	background: white;
+	background: transparent;
+}
+#inputComment {
+	border: none;
 }

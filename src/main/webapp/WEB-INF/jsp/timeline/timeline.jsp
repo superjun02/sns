@@ -29,15 +29,15 @@
 			</div>
 			<div>
 				<div>
-					<img alt="" src="${post.imagePath}" width="432px">
+					<img alt="" src="${post.imagePath}" width="431px">
 				</div>
 			</div>
 			<div id="likeBox">
-				<div class="mt-3">
+				<div class="mt-3 pl-2">
 					<button id="likeBtn"><img alt="이미지 삽입" src="/static/img/empty-heart-icon.png" width="28px" height="28px"></button>				
 					<b>좋아요 11개</b>
 				</div>
-				<div>
+				<div class="pl-3">
 					<b>${post.userId}</b> ${post.content}
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 					<small><b>댓글</b></small>
 				</div>
 			</div>
-			<div>
+			<div id="commentTable" class="mt-2">
 				<table>
 					<tr>
 						<th class="col-3">userId</th>
@@ -62,7 +62,7 @@
 					</tr>
 				</table>
 			</div>
-			<div class="input-group mt-2">
+			<div id="commentInputBox" class="input-group mt-2">
 				<input type="text" class="form-control" id="inputComment" name="inputComment" placeholder="댓글 내용을 입력해주세요">
 				<div class="input-group-prepend">
 					<button id="inputCommentBtn" class="text-primary">게시</button>
