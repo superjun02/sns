@@ -6,13 +6,16 @@
 <div class="content-box col-5">
 	<c:if test="${not empty userId}">
 		<div id="postInputBox" class="mt-3">
-			<textarea id="postBox" rows="3" class="w-100 form-control" placeholder="내용을 입력해주세요"></textarea>
+			<textarea id="content" rows="3" class="w-100 form-control" placeholder="내용을 입력해주세요"></textarea>
 			<div class="d-flex justify-content-between">
-				<div>
+				<div class="d-flex">
+					<input id="file" type="file" class="d-none" accept=".jpg, .png, .gif"/>
 					<button id="imgBtn"><img alt="이미지 삽입" src="/static/img/image_icon.png"></button>
+					<div id="fileName" class="mt-2"></div>
 				</div>
+				
 				<div>
-					<button class="btn btn-info">게시</button>
+					<button id="saveBtn" class="btn btn-info">게시</button>
 				</div>
 			</div>
 		</div>
@@ -76,12 +79,70 @@
 		$('#infoBtn').on('click', function() {
 			alert('더보기 버튼 클릭');
 		});
+		
 		$('#imgBtn').on('click', function() {
-			alert('이미지 버튼 클릭');
+			let file = document.getElementById("file");
+			file.click();
 		});
+		
+		let target = document.getElementById('file');
+		target.addEventListener('change',function(){
+			
+			if (target.value.length){
+				$('#fileName').text(target.files[0].name);
+			} else {
+				$('#fileName').text("");
+			}
+		});
+		
+		$('#saveBtn').on('click', function() {
+			let content = $('#content').val();	
+			let fileName = $('#file').val();	
+			
+			if (!content) {
+				alert("내용을 입력하세요");
+				return;
+			}
+			
+			if (fileName) {
+				let extension = fileName.split(".").pop().toLowerCase();
+				if ($.inArray(extension, ['jpg', 'png', 'gif']) == -1) {
+					alert("이미지 파일만 업로드 할 수 있습니다.");
+					$('#file').val("");
+					$('#originName').text("");
+					return;
+				}
+			}
+			
+			let formData = new FormData();
+			formData.append("content", content);
+			formData.append("file", $('#file')[0].files[0]);
+			
+			$.ajax({
+				type:'POST'
+				, url:"/post/post-create"
+				, data:formData
+				, enctype:"multipart/form-data"
+				, processData:false
+				, contentType:false
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("작성 되었습니다.");
+						location.href = "/timeline/timeline-view";
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(e) {
+					alert("글을 작성하는데 실패하였습니다.")
+				}
+			});
+		});
+		
 		$('#likeBtn').on('click', function() {
 			alert('좋아요 버튼 클릭');
 		});
+		
 		$('#inputCommentBtn').on('click', function() {
 			alert('댓글입력 버튼 클릭');
 		});
