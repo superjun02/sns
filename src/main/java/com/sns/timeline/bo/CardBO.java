@@ -7,17 +7,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sns.comment.domain.Comment;
-import com.sns.comment.mapper.CommentMapper;
 import com.sns.post.entity.PostEntity;
 import com.sns.post.repository.PostRepository;
 import com.sns.timeline.domain.Card;
+import com.sns.user.entity.UserEntity;
 import com.sns.user.repository.UserRepository;
 
 @Service
 public class CardBO {
 	@Autowired
-	private CommentMapper commentMapper;
+	private ReplyBO replyBO;
 	
 	@Autowired
 	private PostRepository postRepository;
@@ -37,11 +36,10 @@ public class CardBO {
 			Card card = new Card();
 			card.setPost(post);
 			
-			List<Comment> commentList = commentMapper.selectCommentListByPostId(post.getId());
-			card.setCommentList(commentList);
+			card.setReplyList(replyBO.getReplyList(post.getId()));
 			
-			String loginId = userRepository.findLoginIdById(post.getId());
-			card.setPostUserId(loginId);
+			UserEntity user = userRepository.findById(post.getUserId());
+			card.setPostUserId(user.getLoginId());
 			
 			cardList.add(card);
 		}

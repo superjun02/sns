@@ -24,7 +24,7 @@
 		<div class="timelineBox mt-5">
 			<div class="d-flex justify-content-between userNameBox">
 				<div class="mt-1 mb-1 ml-3">
-					<b>${card.post.userId}</b>
+					<b>${card.postUserId}</b>
 				</div>
 				<div class="ml-3">
 					<button class="infoBtn"><img alt="이미지 삽입" src="/static/img/more-icon.png" width="28px" height="28px"></button>
@@ -41,7 +41,7 @@
 					<b>좋아요 11개</b>
 				</div>
 				<div class="pl-3">
-					<b>${card.post.userId}</b> ${card.post.content}
+					<b>${card.postUserId}</b> ${card.post.content}
 				</div>
 			</div>
 			<div class="commentBox">
@@ -51,10 +51,10 @@
 			</div>
 			<div class="mt-2 commentTable">
 				<table>
-					<c:forEach items="${card.commentList}" var="comment">
+					<c:forEach items="${card.replyList}" var="reply">
 						<tr>
-							<th class="col-3">${comment.userId}</th>
-							<td class="col-9">${comment.content}</td>
+							<th class="col-3">${reply.commentUserLoginId}</th>
+							<td class="col-9">${reply.comment.content}</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -151,8 +151,7 @@
 				, data: {"content":inputComment, "postId":postId}
 				, success:function(data) {
 					if (data.code == 200) {
-						alert("작성 되었습니다.");
-						location.href = "/timeline/timeline-view";
+						location.reload(true);
 					} else {
 						alert(data.error_message);
 					}

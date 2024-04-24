@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.sns.comment.mapper.CommentMapper">
- 	<select id="selectCommentListByPostId" resultType="map">
+ 	<select id="selectCommentListByPostId" resultType="com.sns.comment.domain.Comment">
  		SELECT
  			`id`
 			,`postId`

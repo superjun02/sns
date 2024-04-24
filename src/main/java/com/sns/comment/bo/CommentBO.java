@@ -14,4 +14,5 @@ public class CommentBO {
 		return commentMapper.insertComment(postId, userId, content);
 	}
 	
+	
 }
