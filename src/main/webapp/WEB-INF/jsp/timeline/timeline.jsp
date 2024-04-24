@@ -20,55 +20,49 @@
 			</div>
 		</div>
 	</c:if>
-	<c:forEach items="${postList}" var="post">
+	<c:forEach items="${cardList}" var="card">
 		<div class="timelineBox mt-5">
-			<div id="userNameBox" class="d-flex justify-content-between">
+			<div class="d-flex justify-content-between userNameBox">
 				<div class="mt-1 mb-1 ml-3">
-					<b>${post.userId}</b>
+					<b>${card.post.userId}</b>
 				</div>
 				<div class="ml-3">
-					<button id="infoBtn"><img alt="이미지 삽입" src="/static/img/more-icon.png" width="28px" height="28px"></button>
+					<button class="infoBtn"><img alt="이미지 삽입" src="/static/img/more-icon.png" width="28px" height="28px"></button>
 				</div>
 			</div>
 			<div>
 				<div>
-					<img alt="" src="${post.imagePath}" width="431px">
+					<img alt="" src="${card.post.imagePath}" width="431px">
 				</div>
 			</div>
-			<div id="likeBox">
+			<div class="likeBox">
 				<div class="mt-3 pl-2">
-					<button id="likeBtn"><img alt="이미지 삽입" src="/static/img/empty-heart-icon.png" width="28px" height="28px"></button>				
+					<button class="likeBtn"><img alt="이미지 삽입" src="/static/img/empty-heart-icon.png" width="28px" height="28px"></button>				
 					<b>좋아요 11개</b>
 				</div>
 				<div class="pl-3">
-					<b>${post.userId}</b> ${post.content}
+					<b>${card.post.userId}</b> ${card.post.content}
 				</div>
 			</div>
-			<div id="commentBox">
+			<div class="commentBox">
 				<div class="mt-1 mb-1 ml-3">
 					<small><b>댓글</b></small>
 				</div>
 			</div>
-			<div id="commentTable" class="mt-2">
+			<div class="mt-2 commentTable">
 				<table>
-					<tr>
-						<th class="col-3">userId</th>
-						<td class="col-9">분류가 잘되었군요</td>
-					</tr>
-					<tr>
-						<th class="col-3">userId</th>
-						<td class="col-9">이게 모야???</td>
-					</tr>
-					<tr>
-						<th class="col-3">userId</th>
-						<td class="col-9">철이 없었죠 분류를 위해 클러스터를 썼다는게</td>
-					</tr>
+					<c:forEach items="${card.commentList}" var="comment">
+						<tr>
+							<th class="col-3">${comment.userId}</th>
+							<td class="col-9">${comment.content}</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 			<div id="commentInputBox" class="input-group mt-2">
-				<input type="text" class="form-control" id="inputComment" name="inputComment" placeholder="댓글 내용을 입력해주세요">
+				<input type="text" class="form-control inputComment" id="inputComment${card.post.id}" name="inputComment" placeholder="댓글 내용을 입력해주세요">
 				<div class="input-group-prepend">
-					<button id="inputCommentBtn" class="text-primary">게시</button>
+					<button class="inputCommentBtn text-primary" value="${card.post.id}">게시</button>
 				</div>
 			</div>
 		</div>
@@ -76,7 +70,7 @@
 </div>
 <script>
 	$(document).ready(function() {
-		$('#infoBtn').on('click', function() {
+		$('.infoBtn').on('click', function() {
 			alert('더보기 버튼 클릭');
 		});
 		
@@ -139,12 +133,34 @@
 			});
 		});
 		
-		$('#likeBtn').on('click', function() {
+		$('.likeBtn').on('click', function() {
 			alert('좋아요 버튼 클릭');
 		});
 		
-		$('#inputCommentBtn').on('click', function() {
-			alert('댓글입력 버튼 클릭');
+		$('.inputCommentBtn').on('click', function() {
+			let postId = $(this).val();
+			let inputComment = $('#inputComment' + postId).val();	
+			
+			if (!inputComment) {
+				alert("내용을 입력하세요");
+			}
+			
+			$.ajax({
+				type:'POST'
+				, url:"/comment/comment-create"
+				, data: {"content":inputComment, "postId":postId}
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("작성 되었습니다.");
+						location.href = "/timeline/timeline-view";
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(e) {
+					alert("댓글글을 작성하는데 실패하였습니다.")
+				}
+			});
 		});
 	});
 </script>

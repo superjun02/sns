@@ -1,7 +1,5 @@
 package com.sns.post.bo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,10 +15,6 @@ public class PostBO {
 	
 	@Autowired
 	private FileManagerService fileManager;
-
-	public List<PostEntity> getPostList() {
-		return postRepository.findByOrderByIdDesc();
-	}
 
 	public PostEntity addPost(int userId, String loginId, String content, MultipartFile file) {
 		String imagePath = null;

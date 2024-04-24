@@ -25,29 +25,29 @@ header {
 	border: none;
 }
 
-#infoBtn {
+.infoBtn {
 	border: none;
 	background: white;
 }
-#likeBtn {
+.likeBtn {
 	border: none;
 	background: transparent;
 }
-#commentInputBox {
+.commentInputBox {
 	border-top: 1px solid;
 	border-color: #CED4DA;
 }
-#commentBox{
+.commentBox{
 	border-bottom: 1px solid;
 	border-color: #CED4DA;
 }
-#commentList {
+.commentList {
 	text-align: left;
 }
-#inputCommentBtn {
+.inputCommentBtn {
 	border: none;
 	background: transparent;
 }
-#inputComment {
+.inputComment {
 	border: none;
 }
