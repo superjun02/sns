@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class Card {
+	private String postUserId;
 	private PostEntity post;
 	private List<Comment> commentList;
 }

@@ -12,6 +12,7 @@ import com.sns.comment.mapper.CommentMapper;
 import com.sns.post.entity.PostEntity;
 import com.sns.post.repository.PostRepository;
 import com.sns.timeline.domain.Card;
+import com.sns.user.repository.UserRepository;
 
 @Service
 public class CardBO {
@@ -20,6 +21,9 @@ public class CardBO {
 	
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	public List<Card> getCardList() {
 		List<Card> cardList = new ArrayList<>();
@@ -35,6 +39,9 @@ public class CardBO {
 			
 			List<Comment> commentList = commentMapper.selectCommentListByPostId(post.getId());
 			card.setCommentList(commentList);
+			
+			String loginId = userRepository.findLoginIdById(post.getId());
+			card.setPostUserId(loginId);
 			
 			cardList.add(card);
 		}
