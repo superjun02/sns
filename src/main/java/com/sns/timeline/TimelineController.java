@@ -24,10 +24,13 @@ public class TimelineController {
 		// DB select
 		Integer userId = (Integer) session.getAttribute("userId");
 		
-		
-		List<Card> cardList = cardBO.getCardList(userId);
-		model.addAttribute("cardList", cardList);
-		
+		if (userId == null) {
+			List<Card> cardList = cardBO.getCardList();
+			model.addAttribute("cardList", cardList);
+		} else {
+			List<Card> cardList = cardBO.getCardList(userId);
+			model.addAttribute("cardList", cardList);
+		}
 		
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";
