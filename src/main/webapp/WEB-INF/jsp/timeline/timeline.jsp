@@ -80,7 +80,7 @@
 <script>
 	$(document).ready(function() {
 		$('.infoBtn').on('click', function() {
-			alert('더보기 버튼 클릭');
+			alert('더보기 버튼 클릭성공');
 		});
 		
 		$('#imgBtn').on('click', function() {
