@@ -28,32 +28,6 @@ public class CardBO {
 	@Autowired
 	private LikeMapper likeMapper;
 	
-	public List<Card> getCardList() {
-		List<Card> cardList = new ArrayList<>();
-		List<PostEntity> postList = postRepository.findByOrderByIdDesc();
-		
-		Iterator<PostEntity> iter = postList.iterator();
-		
-		while (iter.hasNext()) {
-			PostEntity post = iter.next();
-			
-			Card card = new Card();
-			card.setPost(post);
-			
-			card.setReplyList(replyBO.getReplyList(post.getId()));
-			
-			UserEntity user = userRepository.findById(post.getUserId());
-			card.setPostUserId(user.getLoginId());
-			
-			card.setLike(false);
-			int postId = post.getId();
-			card.setLikeNum(likeMapper.countLikeByPostId(postId));
-			
-			cardList.add(card);
-		}
-		return cardList;
-	}
-	
 	public List<Card> getCardList(Integer userId) {
 		List<Card> cardList = new ArrayList<>();
 		List<PostEntity> postList = postRepository.findByOrderByIdDesc();
@@ -72,7 +46,13 @@ public class CardBO {
 			card.setPostUserId(user.getLoginId());
 			
 			int postId = post.getId();
-			card.setLike(likeMapper.selectLikeByPostIdUserId(postId, userId));
+			
+			if (userId == null) {
+				card.setLike(false);
+			} else {
+				card.setLike(likeMapper.selectLikeByPostIdUserId(postId, userId));
+			}
+			
 			card.setLikeNum(likeMapper.countLikeByPostId(postId));
 			
 			cardList.add(card);
