@@ -37,8 +37,15 @@
 			</div>
 			<div class="likeBox">
 				<div class="mt-3 pl-2">
-					<button class="likeBtn"><img alt="이미지 삽입" src="/static/img/empty-heart-icon.png" width="28px" height="28px"></button>				
-					<b>좋아요 11개</b>
+					<c:choose>
+						<c:when test="${card.like}">
+							<button class="likeBtn" value="${card.post.id}"><img alt="이미지 삽입" src="/static/img/heart-icon.png" width="28px" height="28px"></button>
+						</c:when>
+						<c:otherwise>
+							<button class="likeBtn" value="${card.post.id}"><img alt="이미지 삽입" src="/static/img/empty-heart-icon.png" width="28px" height="28px"></button>	
+						</c:otherwise>
+					</c:choose>		
+					<b>좋아요 ${card.likeNum}개</b>
 				</div>
 				<div class="pl-3">
 					<b>${card.postUserId}</b> ${card.post.content}
@@ -59,12 +66,14 @@
 					</c:forEach>
 				</table>
 			</div>
-			<div id="commentInputBox" class="input-group mt-2">
-				<input type="text" class="form-control inputComment" id="inputComment${card.post.id}" name="inputComment" placeholder="댓글 내용을 입력해주세요">
-				<div class="input-group-prepend">
-					<button class="inputCommentBtn text-primary" value="${card.post.id}">게시</button>
+			<c:if test="${not empty userId}">
+				<div id="commentInputBox" class="input-group mt-2">
+					<input type="text" class="form-control inputComment" id="inputComment${card.post.id}" name="inputComment" placeholder="댓글 내용을 입력해주세요">
+					<div class="input-group-prepend">
+						<button class="inputCommentBtn text-primary" value="${card.post.id}">게시</button>
+					</div>
 				</div>
-			</div>
+			</c:if>
 		</div>
 	</c:forEach>
 </div>
@@ -77,16 +86,6 @@
 		$('#imgBtn').on('click', function() {
 			let file = document.getElementById("file");
 			file.click();
-		});
-		
-		let target = document.getElementById('file');
-		target.addEventListener('change',function(){
-			
-			if (target.value.length){
-				$('#fileName').text(target.files[0].name);
-			} else {
-				$('#fileName').text("");
-			}
 		});
 		
 		$('#saveBtn').on('click', function() {
@@ -134,7 +133,21 @@
 		});
 		
 		$('.likeBtn').on('click', function() {
-			alert('좋아요 버튼 클릭');
+			let postId = $(this).val();
+
+			$.ajax({
+				url:"/like/" + postId
+				, success:function(data) {
+					if (data.code == 200) {
+						location.reload(true);
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(e) {
+					alert("좋아요버튼을 작동하는데 실패하였습니다.")
+				}
+			});
 		});
 		
 		$('.inputCommentBtn').on('click', function() {
@@ -160,6 +173,16 @@
 					alert("댓글글을 작성하는데 실패하였습니다.")
 				}
 			});
+		});
+		
+		let target = document.getElementById('file');
+		target.addEventListener('change',function(){
+			
+			if (target.value.length){
+				$('#fileName').text(target.files[0].name);
+			} else {
+				$('#fileName').text("");
+			}
 		});
 	});
 </script>

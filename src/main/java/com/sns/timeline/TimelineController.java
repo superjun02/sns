@@ -22,9 +22,16 @@ public class TimelineController {
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model, HttpSession session) {		
 		// DB select
-		List<Card> cardList = cardBO.getCardList();
+		Integer userId = (Integer) session.getAttribute("userId");
 		
-		model.addAttribute("cardList", cardList);
+		if (userId == null) {
+			List<Card> cardList = cardBO.getCardList();
+			model.addAttribute("cardList", cardList);
+		} else {
+			List<Card> cardList = cardBO.getCardList(userId);
+			model.addAttribute("cardList", cardList);
+		}
+		
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";
 	}

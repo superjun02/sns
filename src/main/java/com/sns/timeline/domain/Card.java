@@ -11,4 +11,6 @@ public class Card {
 	private String postUserId;
 	private PostEntity post;
 	private List<Reply> replyList;
+	private boolean like;
+	private int likeNum;
 }
