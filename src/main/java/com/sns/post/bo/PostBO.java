@@ -33,4 +33,19 @@ public class PostBO {
 		return postRepository.save(post);
 	}
 
+	public PostEntity getPostByPostId(int postId) {
+		return postRepository.findById(postId).orElse(null);
+	}
+
+	public void deletePostByPostId(int postId) {
+		PostEntity post = postRepository.findById(postId).orElse(null);
+		
+		if (post != null) {
+			if (post.getImagePath() != null) {
+				fileManager.deleteFile(post.getImagePath());
+			}
+			postRepository.delete(post);
+		}
+	}
+
 }

@@ -40,4 +40,24 @@ public class PostRestController {
 		
 		return result;
 	}
+	
+	@PostMapping("/post-delete")
+	public Map<String, Object> postDelete(HttpSession session,
+			@RequestParam("postId") int postId) {
+		Map<String, Object> result = new HashMap<>();
+		int userId = (int) session.getAttribute("userId");
+		
+		PostEntity post = postBO.getPostByPostId(postId);
+		
+		if (post.getUserId() != userId) {
+			result.put("code", 500);
+			result.put("message", "본인이 작성한 글만 삭제할 수 있습니다.");
+		} else {
+			postBO.deletePostByPostId(postId);
+			result.put("code", 200);
+			result.put("result", "성공");
+		}
+		
+		return result;
+	}
 }

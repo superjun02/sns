@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class FileManagerService {
 	public static final String FILE_UPLOAD_PATH = "C:\\이상준\\6_spring_project\\sns\\sns_workspace\\images/"; // 학원용
@@ -35,5 +38,29 @@ public class FileManagerService {
 		}
 		
 		return "/images/" + directoryName + file.getOriginalFilename();
+	}
+	
+	public void deleteFile(String imagePath) {
+		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
+		
+		if (Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				log.warn("[파일 매니저] 이미지 삭제 실패. path:{}", path.toString());
+				return;
+			}
+			
+			path = path.getParent();
+			
+			if (Files.exists(path)) {
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					log.warn("[파일 매니저] 이미지폴더 삭제 실패. path:{}", path.toString());
+					return;
+				}
+			}
+		}
 	}
 }
