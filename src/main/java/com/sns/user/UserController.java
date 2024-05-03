@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 	
+	// 테스트용 주석을 추가한다. 
+	
 	@GetMapping("/sign-up-view")
 	public String signUpView(Model model) {
 		model.addAttribute("viewName", "user/signUp");
