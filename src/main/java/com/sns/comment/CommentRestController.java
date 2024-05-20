@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sns.comment.bo.CommentBO;
-import com.sns.comment.domain.Comment;
 
 import jakarta.servlet.http.HttpSession;
 
