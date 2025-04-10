@@ -12,8 +12,7 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	
 	// 테스트용 주석을 추가한다. 
-	// BackEnd branch 테스트
-	// FrontEnd branch 테스트2
+	// BackEnd test03
 
 	@GetMapping("/sign-up-view")
 	public String signUpView(Model model) {
