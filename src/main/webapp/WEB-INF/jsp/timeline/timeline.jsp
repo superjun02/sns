@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="content-box col-5">
-	<!-- front end branch test -->
 	<c:if test="${not empty userId}">
 		<div id="postInputBox" class="mt-3">
 			<textarea id="content" rows="3" class="w-100 form-control" placeholder="내용을 입력해주세요"></textarea>
