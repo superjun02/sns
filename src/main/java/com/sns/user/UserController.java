@@ -13,6 +13,7 @@ public class UserController {
 	
 	// 테스트용 주석을 추가한다. 
 	// BackEnd test05
+	// superjun02 test
 
 	@GetMapping("/sign-up-view")
 	public String signUpView(Model model) {
